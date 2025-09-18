@@ -25,4 +25,9 @@ public class FromMolecule {
         }
         return mass.doubleValue();
     }
+
+    public static int countAtoms(Molecule molecule, Element element)
+    {
+        return molecule.readElements().get(element) != null? molecule.readElements().get(element) : 0;
+    }
 }

@@ -19,11 +19,6 @@ public class ListElementsFrom {
                 .toList();
     }
 
-    public static int countAtoms(Molecule molecule, Element element)
-    {
-        return molecule.readElements().get(element) != null? molecule.readElements().get(element) : 0;
-    }
-
     public static List<Element> moleculesInReaction(List<MoleculeInReaction> moleculesListInReaction) {
         return moleculesListInReaction
                 .stream()

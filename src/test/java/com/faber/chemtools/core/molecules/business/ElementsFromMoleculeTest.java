@@ -30,7 +30,7 @@ class ElementsFromMoleculeTest {
             assert extracted.contains(e) : "Element not found"+ e.getSimbol();
         });
 
-        assert ListElementsFrom.countAtoms(moleculeTest,O) == 4 : "Element "+O.toString()+" count failed. Expected:"+4+" real count:"+ ListElementsFrom.countAtoms(moleculeTest,O);
+        assert FromMolecule.countAtoms(moleculeTest,O) == 4 : "Element "+O.toString()+" count failed. Expected:"+4+" real count:"+ FromMolecule.countAtoms(moleculeTest,O);
     }
 
 }
