@@ -1,11 +1,12 @@
-package com.faber.chemtools.core.molecules.business;
+package com.faber.chemtools.core.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
+import com.faber.chemtools.core.molecules.business.PeriodicTableList;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 import org.junit.jupiter.api.Test;
 
-class MoleculeExtractorTest {
+class MoleculeParserTest {
     @Test
     void extractMoleculeTest() throws InvalidElementException, InvalidMoleculeException {
         class TestCase {
@@ -40,7 +41,7 @@ class MoleculeExtractorTest {
                     expected.addElement(PeriodicTableList.getElement(e[0]), e[1]);
             }
 
-            Molecule result = MoleculeExtractor.extract(test.formula);
+            Molecule result = MoleculeParser.extract(test.formula);
             assert expected.equals(result) : "Extraction failed for molecule: " + test.formula;
         }
     }

@@ -1,25 +1,25 @@
-package com.faber.chemtools.core.reactions.business;
+package com.faber.chemtools.core.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
 import com.faber.chemtools.core.exceptions.InvalidReactionException;
-import com.faber.chemtools.core.molecules.business.MoleculeExtractor;
+import com.faber.chemtools.core.reactions.business.ValidateReaction;
 import com.faber.chemtools.core.reactions.entities.Reaction;
-import com.faber.chemtools.core.reactions.entities.ReactionMolecule;
+import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ExtractEquation {
+public class EquationParser {
     public static Reaction extract(String equation) throws InvalidReactionException {
         if (equation == null || equation.isEmpty()) {
             throw new InvalidReactionException();
         }
 
         String[] reagentsAndProducts = splitReagentsAndProducts(equation);
-        List<ReactionMolecule> reagents = extractMolecules(reagentsAndProducts[0]);
-        List<ReactionMolecule> products = extractMolecules(reagentsAndProducts[1]);
+        List<MoleculeInReaction> reagents = extractMolecules(reagentsAndProducts[0]);
+        List<MoleculeInReaction> products = extractMolecules(reagentsAndProducts[1]);
 
         Reaction reaction = new Reaction(reagents, products);
         if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)){
@@ -39,8 +39,8 @@ public class ExtractEquation {
         throw new InvalidReactionException();
     }
 
-    private static List<ReactionMolecule> extractMolecules(String reagentsOrProducts) {
-        List<ReactionMolecule> molecules = new ArrayList<>();
+    private static List<MoleculeInReaction> extractMolecules(String reagentsOrProducts) {
+        List<MoleculeInReaction> molecules = new ArrayList<>();
         String[] stringMolecules = reagentsOrProducts.split("\\+");
         try {
             for (String strMolecule : stringMolecules) {
@@ -61,7 +61,7 @@ public class ExtractEquation {
                         coefficient = Integer.parseInt(matcher.group(1));
                     }
 
-                    molecules.add(new ReactionMolecule(coefficient, MoleculeExtractor.extract(matcher.group(2).trim())));
+                    molecules.add(new MoleculeInReaction(coefficient, MoleculeParser.extract(matcher.group(2).trim())));
                 }
 
             }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class ValidateReaction {
     public static boolean hasSameElementsOnReagentsAndProducts(Reaction reaction) {
-        List<Element> reagents = ElementsFromReaction.retrieveFromReactiomMolecules(reaction.getReagents());
-        List<Element> products = ElementsFromReaction.retrieveFromReactiomMolecules(reaction.getProducts());
+        List<Element> reagents = ElementsFromReaction.retrieveFromMoleculesInReaction(reaction.getReagents());
+        List<Element> products = ElementsFromReaction.retrieveFromMoleculesInReaction(reaction.getProducts());
         for (Element reagent : reagents) {
             if (!products.contains(reagent)) {
                 return false;

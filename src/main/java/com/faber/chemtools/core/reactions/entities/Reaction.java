@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Reaction {
-    List<ReactionMolecule> reagents = new ArrayList<>();
-    List<ReactionMolecule> products = new ArrayList<>();
+    List<MoleculeInReaction> reagents = new ArrayList<>();
+    List<MoleculeInReaction> products = new ArrayList<>();
 
     public Reaction() {
 
     }
 
-    public Reaction(List<ReactionMolecule> reagents, List<ReactionMolecule> products) {
+    public Reaction(List<MoleculeInReaction> reagents, List<MoleculeInReaction> products) {
         this.reagents = reagents;
         this.products = products;
     }
@@ -29,18 +29,18 @@ public class Reaction {
     }
 
     public void addReagent(Molecule reagent) {
-        this.reagents.add(new ReactionMolecule(1,reagent));
+        this.reagents.add(new MoleculeInReaction(1,reagent));
     }
 
     public void addProduct(Molecule product) {
-        this.products.add(new ReactionMolecule(1,product));
+        this.products.add(new MoleculeInReaction(1,product));
     }
 
-    public List<ReactionMolecule> getReagents() {
+    public List<MoleculeInReaction> getReagents() {
         return this.reagents;
     }
 
-    public List<ReactionMolecule> getProducts() {
+    public List<MoleculeInReaction> getProducts() {
         return this.products;
     }
 

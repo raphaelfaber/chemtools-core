@@ -1,14 +1,16 @@
-package com.faber.chemtools.core.molecules.business;
+package com.faber.chemtools.core.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
+import com.faber.chemtools.core.molecules.business.FormulaExpander;
+import com.faber.chemtools.core.molecules.business.PeriodicTableList;
 import com.faber.chemtools.core.molecules.entities.Element;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MoleculeExtractor {
+public class MoleculeParser {
     public static final String MOLECULE_PATTERN = "([A-Z][a-z]?)(\\d*)";
 
     public static Molecule extract(String formula) throws InvalidMoleculeException {

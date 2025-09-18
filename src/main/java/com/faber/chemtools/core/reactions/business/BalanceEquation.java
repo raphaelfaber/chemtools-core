@@ -4,7 +4,7 @@ import com.faber.chemtools.core.externaltools.MatrixHandler;
 import com.faber.chemtools.core.molecules.business.ElementsFromMolecule;
 import com.faber.chemtools.core.molecules.entities.Element;
 import com.faber.chemtools.core.reactions.entities.Reaction;
-import com.faber.chemtools.core.reactions.entities.ReactionMolecule;
+import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
 
 import java.util.*;
 
@@ -17,8 +17,8 @@ public class BalanceEquation {
     }
 
     private static int[][] extractReactionMatrix(Reaction reaction) {
-        List<ReactionMolecule> reagents = reaction.getReagents();
-        List<ReactionMolecule> products = reaction.getProducts();
+        List<MoleculeInReaction> reagents = reaction.getReagents();
+        List<MoleculeInReaction> products = reaction.getProducts();
 
         List<Element> elementsInReaction = ElementsFromReaction.listAllElements(reaction);
         int[][] matrix = new int[elementsInReaction.size()][reagents.size() + products.size()];

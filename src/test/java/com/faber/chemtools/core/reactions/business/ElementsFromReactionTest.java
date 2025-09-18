@@ -4,7 +4,7 @@ import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.molecules.business.PeriodicTableList;
 import com.faber.chemtools.core.molecules.entities.Element;
 import com.faber.chemtools.core.molecules.entities.Molecule;
-import com.faber.chemtools.core.reactions.entities.ReactionMolecule;
+import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -22,9 +22,9 @@ class ElementsFromReactionTest {
         molecule.addElement(O, 1);
         molecule.addElement(Cl, 1);
         molecule.addElement(H, 1);
-        ReactionMolecule reactionMolecule = new ReactionMolecule(2, molecule);
+        MoleculeInReaction moleculeInReaction = new MoleculeInReaction(2, molecule);
 
-        List<Element> extracted = ElementsFromReaction.retrieveFromReactiomMolecules(List.of(reactionMolecule));
+        List<Element> extracted = ElementsFromReaction.retrieveFromMoleculesInReaction(List.of(moleculeInReaction));
         expected.forEach(e -> {
             assert extracted.contains(e) : "Element not found" + e.getSimbol();
         });
