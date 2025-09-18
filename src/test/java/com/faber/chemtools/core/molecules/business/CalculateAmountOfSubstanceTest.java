@@ -1,5 +1,6 @@
 package com.faber.chemtools.core.molecules.business;
 
+import com.faber.chemtools.core.elements.business.ElementData;
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class CalculateAmountOfSubstanceTest {
             this.expectedMoles = expectedMoles;
             this.molecule = new Molecule();
             for (int[] element : elements) {
-                this.molecule.addElement(PeriodicTableList.getElement(element[0]), element[1]);
+                this.molecule.addElement(ElementData.getElement(element[0]), element[1]);
             }
         }
     }
@@ -39,7 +40,7 @@ class CalculateAmountOfSubstanceTest {
         };
 
         for (TestCase test : testCases) {
-            double calculatedMoles = CalculateAmountOfSubstance.calculate(test.massInGrams, test.molecule);
+            double calculatedMoles = FromMolecule.calculateAmountOfSubstance(test.massInGrams, test.molecule);
             assertEquals(test.expectedMoles, calculatedMoles, 0.01,
                     "Number of moles mismatch for " + test.formula +
                             ". Expected: " + test.expectedMoles + " but was: " + calculatedMoles);

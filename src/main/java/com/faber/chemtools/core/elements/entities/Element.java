@@ -1,4 +1,4 @@
-package com.faber.chemtools.core.molecules.entities;
+package com.faber.chemtools.core.elements.entities;
 
 public class Element {
     private final String simbol;

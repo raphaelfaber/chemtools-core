@@ -1,11 +1,11 @@
-package com.faber.chemtools.core.molecules.business;
+package com.faber.chemtools.core.elements.business;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
-import com.faber.chemtools.core.molecules.entities.Element;
+import com.faber.chemtools.core.elements.entities.Element;
 
 import java.util.List;
 
-public class PeriodicTableList {
+public class ElementData {
     private static List<Element> elements;
 
     static {

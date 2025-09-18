@@ -1,4 +1,4 @@
-package com.faber.chemtools.core.molecules.business;
+package com.faber.chemtools.core.util.parser;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

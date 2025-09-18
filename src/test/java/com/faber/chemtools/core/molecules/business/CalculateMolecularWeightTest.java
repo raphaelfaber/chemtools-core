@@ -1,5 +1,6 @@
 package com.faber.chemtools.core.molecules.business;
 
+import com.faber.chemtools.core.elements.business.ElementData;
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class CalculateMolecularWeightTest {
             this.expectedWeight = expectedWeight;
             this.molecule = new Molecule();
             for (int[] element : elements) {
-                this.molecule.addElement(PeriodicTableList.getElement(element[0]), element[1]);
+                this.molecule.addElement(ElementData.getElement(element[0]), element[1]);
             }
         }
     }
@@ -40,7 +41,7 @@ class CalculateMolecularWeightTest {
         };
         for (TestCase test : testCases) {
             double expectedMss = test.expectedWeight;
-            double calculatedMass = CalculateMolecularWeight.calculate(test.molecule);
+            double calculatedMass = FromMolecule.calculateMolecularWeight(test.molecule);
 
             assertEquals(calculatedMass, expectedMss, 0.1, "Expected: " + expectedMss + " but was: " + calculatedMass);
         }

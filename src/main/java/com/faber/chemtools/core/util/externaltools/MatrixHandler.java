@@ -1,4 +1,4 @@
-package com.faber.chemtools.core.externaltools;
+package com.faber.chemtools.core.util.externaltools;
 
 import org.apache.commons.math3.fraction.Fraction;
 import org.apache.commons.math3.fraction.FractionField;

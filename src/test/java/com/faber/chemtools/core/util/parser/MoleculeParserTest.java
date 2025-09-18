@@ -1,9 +1,10 @@
-package com.faber.chemtools.core.parser;
+package com.faber.chemtools.core.util.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
-import com.faber.chemtools.core.molecules.business.PeriodicTableList;
+import com.faber.chemtools.core.elements.business.ElementData;
 import com.faber.chemtools.core.molecules.entities.Molecule;
+
 import org.junit.jupiter.api.Test;
 
 class MoleculeParserTest {
@@ -38,7 +39,7 @@ class MoleculeParserTest {
             expected.setFormula(test.formula);
             for (int[] e : test.elements) {
                 if (e[0] > 0)
-                    expected.addElement(PeriodicTableList.getElement(e[0]), e[1]);
+                    expected.addElement(ElementData.getElement(e[0]), e[1]);
             }
 
             Molecule result = MoleculeParser.extract(test.formula);

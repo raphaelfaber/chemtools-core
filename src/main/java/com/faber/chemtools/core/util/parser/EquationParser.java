@@ -1,4 +1,4 @@
-package com.faber.chemtools.core.parser;
+package com.faber.chemtools.core.util.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
 import com.faber.chemtools.core.exceptions.InvalidReactionException;

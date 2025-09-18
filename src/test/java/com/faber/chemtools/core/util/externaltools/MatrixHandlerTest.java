@@ -1,4 +1,4 @@
-package com.faber.chemtools.core.externaltools;
+package com.faber.chemtools.core.util.externaltools;
 
 import org.junit.jupiter.api.Test;
 

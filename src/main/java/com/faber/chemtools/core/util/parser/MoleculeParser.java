@@ -1,10 +1,9 @@
-package com.faber.chemtools.core.parser;
+package com.faber.chemtools.core.util.parser;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
-import com.faber.chemtools.core.molecules.business.FormulaExpander;
-import com.faber.chemtools.core.molecules.business.PeriodicTableList;
-import com.faber.chemtools.core.molecules.entities.Element;
+import com.faber.chemtools.core.elements.business.ElementData;
+import com.faber.chemtools.core.elements.entities.Element;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 
 import java.util.regex.Matcher;
@@ -28,7 +27,7 @@ public class MoleculeParser {
 
         try {
             while (matcher.find()) {
-                Element element = PeriodicTableList.getElement(matcher.group(1));
+                Element element = ElementData.getElement(matcher.group(1));
                 int atomicity = 1;
                 if (matcher.group(2) != null && !matcher.group(2).isEmpty()) {
                     atomicity = Integer.parseInt(matcher.group(2));

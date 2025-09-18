@@ -1,5 +1,6 @@
 package com.faber.chemtools.core.molecules.business;
 
+import com.faber.chemtools.core.util.parser.FormulaExpander;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

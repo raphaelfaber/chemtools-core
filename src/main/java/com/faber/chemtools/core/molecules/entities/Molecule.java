@@ -1,5 +1,7 @@
 package com.faber.chemtools.core.molecules.entities;
 
+import com.faber.chemtools.core.elements.entities.Element;
+
 import java.util.*;
 
 public class Molecule {

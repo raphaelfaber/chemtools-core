@@ -1,8 +1,8 @@
 package com.faber.chemtools.core.reactions.business;
 
 import com.faber.chemtools.core.exceptions.InvalidElementException;
-import com.faber.chemtools.core.molecules.business.PeriodicTableList;
-import com.faber.chemtools.core.molecules.entities.Element;
+import com.faber.chemtools.core.elements.business.ElementData;
+import com.faber.chemtools.core.elements.entities.Element;
 import com.faber.chemtools.core.molecules.entities.Molecule;
 import com.faber.chemtools.core.reactions.entities.Reaction;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 class BalanceEquationTest {
     @Test
     void waterFormationTest() throws InvalidElementException {
-        Element H = PeriodicTableList.getElement(1);
-        Element O = PeriodicTableList.getElement(8);
+        Element H = ElementData.getElement(1);
+        Element O = ElementData.getElement(8);
 
         Molecule H2 = new Molecule();
         H2.addElement(H,2);
