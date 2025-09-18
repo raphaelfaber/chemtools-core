@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MoleculeExtractor {
+    public static final String MOLECULE_PATTERN = "([A-Z][a-z]?)(\\d*)";
+
     public static Molecule extract(String formula) throws InvalidMoleculeException {
         if (formula == null || formula.isEmpty()) {
             throw new InvalidMoleculeException();
@@ -16,8 +18,7 @@ public class MoleculeExtractor {
 
         String expandedFormula = FormulaExpander.expand(formula);
 
-        String strMoleculePattern = "([A-Z][a-z]?)(\\d*)";
-        Pattern pattern = Pattern.compile(strMoleculePattern);
+        Pattern pattern = Pattern.compile(MOLECULE_PATTERN);
         Matcher matcher = pattern.matcher(expandedFormula);
 
         Molecule molecule = new Molecule();
@@ -37,4 +38,5 @@ public class MoleculeExtractor {
         }
         return molecule;
     }
+
 }

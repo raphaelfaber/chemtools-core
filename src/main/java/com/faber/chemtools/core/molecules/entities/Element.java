@@ -24,4 +24,9 @@ public class Element {
     public double getAtomicWeight() {
         return atomicWeight;
     }
+
+    public String toString()
+    {
+        return simbol;
+    }
 }

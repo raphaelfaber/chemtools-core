@@ -1,9 +1,6 @@
 package com.faber.chemtools.core.molecules.entities;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Molecule {
     String formula;
@@ -26,7 +23,7 @@ public class Molecule {
     }
 
     public Map<Element, Integer> readElements() {
-        return Collections.unmodifiableMap(elements);
+        return Map.copyOf(elements);
     }
 
     public boolean equals(Molecule molecule) {
@@ -42,5 +39,17 @@ public class Molecule {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        if(formula != null && !formula.isEmpty()) {
+            return formula;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (HashMap.Entry<Element, Integer> entry : this.elements.entrySet()) {
+            sb.append(entry.getKey().toString()).append(entry.getValue() != 1 ? entry.getValue() : "");
+        }
+        return sb.toString();
     }
 }

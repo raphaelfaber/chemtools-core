@@ -1,0 +1,28 @@
+package com.faber.chemtools.core.reactions.business;
+
+import com.faber.chemtools.core.molecules.business.ElementsFromMolecule;
+import com.faber.chemtools.core.molecules.entities.Element;
+import com.faber.chemtools.core.reactions.entities.Reaction;
+import com.faber.chemtools.core.reactions.entities.ReactionMolecule;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ElementsFromReaction {
+    public static List<Element> retrieveFromReactiomMolecules(List<ReactionMolecule> reactionMoleculesList) {
+        return reactionMoleculesList
+                .stream()
+                .map(ReactionMolecule::getMolecule)
+                .map(ElementsFromMolecule::retrieve)
+                .flatMap(List::stream)
+                .distinct()
+                .toList();
+    }
+
+    public static List<Element> listAllElements(Reaction reaction) {
+        List<Element> elements = new ArrayList<>(retrieveFromReactiomMolecules(reaction.getProducts()));
+        elements.addAll(retrieveFromReactiomMolecules(reaction.getReagents()));
+        return List.copyOf(elements);
+    }
+
+}
