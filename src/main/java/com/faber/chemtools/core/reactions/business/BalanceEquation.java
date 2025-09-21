@@ -9,7 +9,22 @@ import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
 
 import java.util.*;
 
+/**
+ * Provides functionality to balance chemical reactions using
+ * a matrix-based approach. Each element in the reaction is
+ * represented as a row, and each molecule as a column in the matrix.
+ *
+ * <p>The system of equations derived from the matrix is solved
+ * to obtain the stoichiometric coefficients for the reaction.</p>
+ */
 public class BalanceEquation {
+
+    /**
+     * Balances a chemical reaction by determining the stoichiometric coefficients.
+     *
+     * @param reaction the chemical reaction to balance
+     * @return the balanced reaction with coefficients set
+     */
     public static Reaction balance(Reaction reaction) {
         int[][] matrix = extractReactionMatrix(reaction);
         int[] coefficients = MatrixHandler.solveMatrix(matrix);
@@ -17,6 +32,17 @@ public class BalanceEquation {
         return reaction;
     }
 
+    /**
+     * Builds the matrix representation of the given reaction, where:
+     * <ul>
+     *     <li>Rows correspond to the elements present in the reaction.</li>
+     *     <li>Columns correspond to the molecules (reagents and products).</li>
+     *     <li>Reagent atom counts are positive; product atom counts are negative.</li>
+     * </ul>
+     *
+     * @param reaction the chemical reaction to analyze
+     * @return a 2D integer matrix representing the system of equations for balancing
+     */
     private static int[][] extractReactionMatrix(Reaction reaction) {
         List<MoleculeInReaction> reagents = reaction.getReagents();
         List<MoleculeInReaction> products = reaction.getProducts();
