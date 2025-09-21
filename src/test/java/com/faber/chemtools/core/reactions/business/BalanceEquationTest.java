@@ -29,7 +29,14 @@ class BalanceEquationTest {
         reaction.addMultipleProducts(O2,H2);
 
         Reaction balanced = BalanceEquation.balance(reaction);
-        System.out.println(balanced);
+        //2 H2O
+        assert balanced.getReagents().getFirst().getStoichiometricCoefficient() == 2;
+
+        //1 O2
+        assert balanced.getProducts().getFirst().getStoichiometricCoefficient() == 1;
+
+        //2 H2
+        assert balanced.getProducts().get(1).getStoichiometricCoefficient() == 2;
 
     }
 }
