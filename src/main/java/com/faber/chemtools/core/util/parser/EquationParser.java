@@ -35,8 +35,8 @@ public class EquationParser {
         }
 
         String[] reagentsAndProducts = splitReagentsAndProducts(equation);
-        List<MoleculeInReaction> reagents = extractMolecules(reagentsAndProducts[0]);
-        List<MoleculeInReaction> products = extractMolecules(reagentsAndProducts[1]);
+        List<MoleculeInReaction> reagents = extractMoleculesList(reagentsAndProducts[0]);
+        List<MoleculeInReaction> products = extractMoleculesList(reagentsAndProducts[1]);
 
         Reaction reaction = new Reaction(reagents, products);
         if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)){
@@ -67,7 +67,7 @@ public class EquationParser {
      * @return a list of {@link MoleculeInReaction} objects
      * @throws RuntimeException if a molecule cannot be parsed into a valid {@link com.faber.chemtools.core.molecules.entities.Molecule}
      */
-    private static List<MoleculeInReaction> extractMolecules(String reagentsOrProducts) {
+    private static List<MoleculeInReaction> extractMoleculesList(String reagentsOrProducts) {
         List<MoleculeInReaction> molecules = new ArrayList<>();
         String[] stringMolecules = reagentsOrProducts.split("\\+");
         try {
