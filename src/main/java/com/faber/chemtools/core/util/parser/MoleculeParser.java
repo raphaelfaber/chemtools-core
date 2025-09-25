@@ -14,7 +14,7 @@ public class MoleculeParser {
 
     public static Molecule extract(String formula) throws InvalidMoleculeException {
         if (formula == null || formula.isEmpty()) {
-            throw new InvalidMoleculeException();
+            throw new InvalidMoleculeException("The formula is empty or null");
         }
 
         String expandedFormula = FormulaExpander.expand(formula);
@@ -35,7 +35,7 @@ public class MoleculeParser {
                 molecule.addElement(element, atomicity);
             }
         } catch (InvalidElementException e) {
-            throw new InvalidMoleculeException();
+            throw new InvalidMoleculeException("Failed to parse formula "+formula+" as molecule");
         }
         return molecule;
     }

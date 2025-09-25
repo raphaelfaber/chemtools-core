@@ -35,11 +35,18 @@ public class EquationParser {
         }
 
         String[] reagentsAndProducts = splitReagentsAndProducts(equation);
-        List<MoleculeInReaction> reagents = extractMoleculesList(reagentsAndProducts[0]);
-        List<MoleculeInReaction> products = extractMoleculesList(reagentsAndProducts[1]);
+
+        List<MoleculeInReaction> reagents;
+        List<MoleculeInReaction> products;
+        try {
+            reagents = extractMoleculesList(reagentsAndProducts[0]);
+            products = extractMoleculesList(reagentsAndProducts[1]);
+        } catch (InvalidMoleculeException e) {
+            throw new InvalidReactionException("Failed to parse molecule: " + e.getMessage());
+        }
 
         Reaction reaction = new Reaction(reagents, products);
-        if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)){
+        if (!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)) {
             throw new InvalidReactionException("Reagents and products do not contain the same elements");
         }
         return reaction;
@@ -47,7 +54,7 @@ public class EquationParser {
 
     private static String[] splitReagentsAndProducts(String equation) throws InvalidReactionException {
         String[] reagentAndProducts;
-        if (equation.contains("=>")||equation.contains("->")||equation.contains("=")) {
+        if (equation.contains("=>") || equation.contains("->") || equation.contains("=")) {
             reagentAndProducts = equation.split("=>|->|=");
             if (reagentAndProducts.length == 2) {
                 return reagentAndProducts;
@@ -65,37 +72,33 @@ public class EquationParser {
      *
      * @param reagentsOrProducts string containing one or more molecules separated by "+"
      * @return a list of {@link MoleculeInReaction} objects
-     * @throws RuntimeException if a molecule cannot be parsed into a valid {@link com.faber.chemtools.core.molecules.entities.Molecule}
+     * @throws InvalidMoleculeException if a molecule cannot be parsed into a valid {@link com.faber.chemtools.core.molecules.entities.Molecule}
      */
-    private static List<MoleculeInReaction> extractMoleculesList(String reagentsOrProducts) {
+    private static List<MoleculeInReaction> extractMoleculesList(String reagentsOrProducts) throws InvalidMoleculeException {
         List<MoleculeInReaction> molecules = new ArrayList<>();
         String[] stringMolecules = reagentsOrProducts.split("\\+");
-        try {
-            for (String strMolecule : stringMolecules) {
-                strMolecule = strMolecule.trim();
-                //remove states if exists
-                strMolecule = strMolecule.replace("(l)", "");
-                strMolecule = strMolecule.replace("(g)", "");
-                strMolecule = strMolecule.replace("(aq)", "");
-                strMolecule = strMolecule.replace("(s)", "");
 
-                String moleculeWithCoefficientPattern = "(^\\d{0,})(.+?$)";
-                Pattern pattern = Pattern.compile(moleculeWithCoefficientPattern);
-                Matcher matcher = pattern.matcher(strMolecule);
-                int coefficient = 1;
+        for (String strMolecule : stringMolecules) {
+            strMolecule = strMolecule.trim();
+            //remove states if exists
+            strMolecule = strMolecule.replace("(l)", "");
+            strMolecule = strMolecule.replace("(g)", "");
+            strMolecule = strMolecule.replace("(aq)", "");
+            strMolecule = strMolecule.replace("(s)", "");
 
-                if (matcher.find()) {
-                    if (matcher.group(1) != null && !matcher.group(1).isEmpty()) {
-                        coefficient = Integer.parseInt(matcher.group(1));
-                    }
+            String moleculeWithCoefficientPattern = "(^\\d{0,})(.+?$)";
+            Pattern pattern = Pattern.compile(moleculeWithCoefficientPattern);
+            Matcher matcher = pattern.matcher(strMolecule);
+            int coefficient = 1;
 
-                    molecules.add(new MoleculeInReaction(coefficient, MoleculeParser.extract(matcher.group(2).trim())));
+            if (matcher.find()) {
+                if (matcher.group(1) != null && !matcher.group(1).isEmpty()) {
+                    coefficient = Integer.parseInt(matcher.group(1));
                 }
-
+                molecules.add(new MoleculeInReaction(coefficient, MoleculeParser.extract(matcher.group(2).trim())));
             }
-        } catch (InvalidMoleculeException e) {
-            throw new RuntimeException(e);
         }
+
         return molecules;
     }
 
