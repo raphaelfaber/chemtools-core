@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class EquationParser {
     public static Reaction extract(String equation) throws InvalidReactionException {
         if (equation == null || equation.isEmpty()) {
-            throw new InvalidReactionException();
+            throw new InvalidReactionException("Malformed equation");
         }
 
         String[] reagentsAndProducts = splitReagentsAndProducts(equation);
@@ -23,7 +23,7 @@ public class EquationParser {
 
         Reaction reaction = new Reaction(reagents, products);
         if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)){
-            throw new InvalidReactionException();
+            throw new InvalidReactionException("Reagents and products do not contain the same elements");
         }
         return reaction;
     }
