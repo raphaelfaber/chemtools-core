@@ -21,6 +21,8 @@ public class FromMolecule {
      * @return the amount of substance (in moles)
      */
     public static double calculateAmountOfSubstance(double massInGrams, Molecule molecule) {
+        if(massInGrams < 0) throw new IllegalArgumentException("massInGrams should be greater than 0");
+        if(molecule.readElements().isEmpty()) throw new IllegalArgumentException("molecule should have at least one element");
         BigDecimal mass = BigDecimal.valueOf(massInGrams);
         BigDecimal molMass = BigDecimal.valueOf(calculateMolecularWeight(molecule));
         return mass.divide(molMass, RoundingMode.HALF_UP).doubleValue();
@@ -34,6 +36,8 @@ public class FromMolecule {
      * @return the calculated mass in grams
      */
     public static double calculateMassInAmountOfSubstance(double amountOfSubstance, Molecule molecule) {
+        if(amountOfSubstance < 0) throw new IllegalArgumentException("amountOfSubstance should be greater than 0");
+        if(molecule.readElements().isEmpty()) throw new IllegalArgumentException("molecule should have at least one element");
         BigDecimal moles = BigDecimal.valueOf(amountOfSubstance);
         BigDecimal molMass = BigDecimal.valueOf(calculateMolecularWeight(molecule));
         return moles.multiply(molMass).doubleValue();
@@ -46,6 +50,7 @@ public class FromMolecule {
      * @return the molecular weight of the molecule in g/mol
      */
     public static double calculateMolecularWeight(Molecule molecule) {
+        if(molecule.readElements().isEmpty()) throw new IllegalArgumentException("molecule should have at least one element");
         BigDecimal mass = new BigDecimal("0");
         Map<Element, Integer> elements = molecule.readElements();
         for (Element element : elements.keySet()) {

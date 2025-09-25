@@ -17,6 +17,10 @@ public class Molecule {
     }
 
     public void addElement(Element element, int atomicity) {
+        if(atomicity < 1)
+        {
+            throw new IllegalArgumentException("atomicity should be greater than 0");
+        }
         if (elements.containsKey(element)) {
             elements.put(element, elements.get(element) + atomicity);
             return;

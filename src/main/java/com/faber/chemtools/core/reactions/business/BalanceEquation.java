@@ -1,6 +1,7 @@
 package com.faber.chemtools.core.reactions.business;
 
 import com.faber.chemtools.core.elements.business.ListElementsFrom;
+import com.faber.chemtools.core.exceptions.InvalidReactionException;
 import com.faber.chemtools.core.molecules.business.FromMolecule;
 import com.faber.chemtools.core.util.externaltools.MatrixHandler;
 import com.faber.chemtools.core.elements.entities.Element;
@@ -25,7 +26,8 @@ public class BalanceEquation {
      * @param reaction the chemical reaction to balance
      * @return the balanced reaction with coefficients set
      */
-    public static Reaction balance(Reaction reaction) {
+    public static Reaction balance(Reaction reaction) throws InvalidReactionException {
+        if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)) throw new InvalidReactionException() ;
         int[][] matrix = extractReactionMatrix(reaction);
         int[] coefficients = MatrixHandler.solveMatrix(matrix);
         reaction.setCoefficients(coefficients);
