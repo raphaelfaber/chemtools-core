@@ -1,5 +1,6 @@
 package com.faber.chemtools.core.reactions.business;
 
+import com.faber.chemtools.core.exceptions.BalanceEquationFailException;
 import com.faber.chemtools.core.exceptions.InvalidElementException;
 import com.faber.chemtools.core.elements.business.ElementData;
 import com.faber.chemtools.core.elements.entities.Element;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BalanceEquationTest {
 
     @Test
-    void shouldBalanceWaterFormation() throws InvalidElementException, InvalidReactionException {
+    void shouldBalanceWaterFormation() throws InvalidElementException, InvalidReactionException, BalanceEquationFailException {
         Element hydrogen = ElementData.getElement(1);
         Element oxygen = ElementData.getElement(8);
 
@@ -37,12 +38,13 @@ class BalanceEquationTest {
         assertEquals(2, balanced.getReagents().getFirst().getStoichiometricCoefficient(), "H2O coefficient mismatch");
         assertEquals(1, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "O2 coefficient mismatch");
         assertEquals(2, balanced.getProducts().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
+        assertTrue(ValidateReaction.isBalanced(reaction));
     }
 
     //CH₄ + O₂ → CO₂ + H₂O
     //Balanced: CH₄ + 2 O₂ → CO₂ + 2 H₂O
     @Test
-    void shouldBalanceMethaneCombustion() throws InvalidElementException, InvalidReactionException {
+    void shouldBalanceMethaneCombustion() throws InvalidElementException, InvalidReactionException, BalanceEquationFailException {
         Element carbon = ElementData.getElement("C");
         Element hydrogen = ElementData.getElement("H");
         Element oxygen = ElementData.getElement("O");
@@ -72,12 +74,13 @@ class BalanceEquationTest {
         assertEquals(2, balanced.getReagents().get(1).getStoichiometricCoefficient(), "O2 coefficient mismatch");
         assertEquals(1, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "CO2 coefficient mismatch");
         assertEquals(2, balanced.getProducts().get(1).getStoichiometricCoefficient(), "H2O coefficient mismatch");
+        assertTrue(ValidateReaction.isBalanced(reaction));
     }
 
     //N₂ + H₂ → NH₃
     //Balanced: N₂ + 3 H₂ → 2 NH₃
     @Test
-    void shouldBalanceAmmoniaFormation() throws InvalidElementException, InvalidReactionException {
+    void shouldBalanceAmmoniaFormation() throws InvalidElementException, InvalidReactionException, BalanceEquationFailException {
         Element nitrogen = ElementData.getElement("N");
         Element hydrogen = ElementData.getElement("H");
 
@@ -100,6 +103,7 @@ class BalanceEquationTest {
         assertEquals(1, balanced.getReagents().getFirst().getStoichiometricCoefficient(), "N2 coefficient mismatch");
         assertEquals(3, balanced.getReagents().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
         assertEquals(2, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "NH3 coefficient mismatch");
+        assertTrue(ValidateReaction.isBalanced(reaction));
     }
 
     @Test
