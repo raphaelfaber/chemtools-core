@@ -12,6 +12,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EquationParser {
+    /**
+     * Utility class to parse chemical equations expressed as strings into {@link Reaction} objects.
+     * <p>
+     * The parser supports equations with common reaction arrows: "->", "=>", or "=".
+     * Molecules can optionally include stoichiometric coefficients and physical states
+     * (l, g, s, aq), which are ignored during parsing.
+     * </p>
+     *
+     * <h3>Example usage:</h3>
+     * <pre>
+     * String equation = "2 H2 + O2 -> 2 H2O";
+     * Reaction reaction = EquationParser.extract(equation);
+     * </pre>
+     *
+     * <p>Throws {@link InvalidReactionException} if the equation is malformed, contains
+     * elements in products not present in reagents, or cannot be parsed correctly.</p>
+     */
     public static Reaction extract(String equation) throws InvalidReactionException {
         if (equation == null || equation.isEmpty()) {
             throw new InvalidReactionException("Malformed equation");
@@ -39,6 +56,17 @@ public class EquationParser {
         throw new InvalidReactionException();
     }
 
+    /**
+     * Extracts {@link MoleculeInReaction} objects from a string containing multiple molecules.
+     * <p>
+     * Molecules may include an optional stoichiometric coefficient at the beginning.
+     * Physical states (l, g, s, aq) are ignored during parsing.
+     * </p>
+     *
+     * @param reagentsOrProducts string containing one or more molecules separated by "+"
+     * @return a list of {@link MoleculeInReaction} objects
+     * @throws RuntimeException if a molecule cannot be parsed into a valid {@link com.faber.chemtools.core.molecules.entities.Molecule}
+     */
     private static List<MoleculeInReaction> extractMolecules(String reagentsOrProducts) {
         List<MoleculeInReaction> molecules = new ArrayList<>();
         String[] stringMolecules = reagentsOrProducts.split("\\+");
