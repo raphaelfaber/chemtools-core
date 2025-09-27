@@ -35,10 +35,19 @@ public class FromReaction {
      * @return the MoleculeInReaction object corresponding to the given molecule
      * @throws MoleculeNotFoundException if the molecule is not found in the list
      */
-    public MoleculeInReaction findMolecule(List<MoleculeInReaction> reagentsOrProducts, Molecule molecule) throws MoleculeNotFoundException {
+    public static MoleculeInReaction findMolecule(List<MoleculeInReaction> reagentsOrProducts, Molecule molecule) throws MoleculeNotFoundException {
         return reagentsOrProducts.stream()
                 .filter(moleculeInReaction -> moleculeInReaction.getMolecule().getFormula() != null && !moleculeInReaction.getMolecule().getFormula().isEmpty())
                 .filter(moleculeInReaction -> moleculeInReaction.getMolecule().getFormula().equals(molecule.getFormula()))
+                .distinct()
+                .findFirst()
+                .orElseThrow(MoleculeNotFoundException::new);
+    }
+
+    public static MoleculeInReaction findMolecule(List<MoleculeInReaction> reagentsOrProducts, String formula) throws MoleculeNotFoundException {
+        return reagentsOrProducts.stream()
+                .filter(moleculeInReaction -> moleculeInReaction.getMolecule().getFormula() != null && !moleculeInReaction.getMolecule().getFormula().isEmpty())
+                .filter(moleculeInReaction -> moleculeInReaction.getMolecule().getFormula().equals(formula))
                 .distinct()
                 .findFirst()
                 .orElseThrow(MoleculeNotFoundException::new);

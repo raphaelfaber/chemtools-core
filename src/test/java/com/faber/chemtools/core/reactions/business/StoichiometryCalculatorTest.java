@@ -14,13 +14,6 @@ class StoichiometryCalculatorTest {
 
     private static final double DELTA = 0.1;
 
-    private StoichiometryCalculator calculator;
-
-    @BeforeEach
-    void setupCalculator() {
-        calculator = new StoichiometryCalculator();
-    }
-
     @Nested
     class WaterFormationTest {
         private Element H, O;
@@ -48,24 +41,24 @@ class StoichiometryCalculatorTest {
 
         @Test
         void shouldCalculateProportionalMolesFromMoles() {
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMoles(H2, 2.0, O2), DELTA);
-            assertEquals(2.0, calculator.calculateProportionalMolesFromMoles(H2, 2.0, H2O), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMoles(H2, 2.0, O2), DELTA);
+            assertEquals(2.0, StoichiometryCalculator.calculateProportionalMolesFromMoles(H2, 2.0, H2O), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMolesFromMass() {
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMass(H2, 4.0, O2), DELTA);
-            assertEquals(2.0, calculator.calculateProportionalMolesFromMass(H2, 4.0, H2O), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMass(H2, 4.0, O2), DELTA);
+            assertEquals(2.0, StoichiometryCalculator.calculateProportionalMolesFromMass(H2, 4.0, H2O), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMassFromMass() {
-            assertEquals(36.0, calculator.calculateProportionalMassFromMass(H2, 4.0, H2O), DELTA);
+            assertEquals(36.0, StoichiometryCalculator.calculateProportionalMassFromMass(H2, 4.0, H2O), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMassFromMoles() {
-            assertEquals(32.0, calculator.calculateProportionalMassFromMoles(H2, 2.0, O2), DELTA);
+            assertEquals(32.0, StoichiometryCalculator.calculateProportionalMassFromMoles(H2, 2.0, O2), DELTA);
         }
     }
 
@@ -103,16 +96,16 @@ class StoichiometryCalculatorTest {
 
         @Test
         void shouldCalculateProportionalMassFromMass() {
-            assertEquals(44.0, calculator.calculateProportionalMassFromMass(CH4, 16.0, CO2), DELTA);
-            assertEquals(36.0, calculator.calculateProportionalMassFromMass(CH4, 16.0, H2O), DELTA);
-            assertEquals(44.0, calculator.calculateProportionalMassFromMass(O2, 64.0, CO2), DELTA);
+            assertEquals(44.0, StoichiometryCalculator.calculateProportionalMassFromMass(CH4, 16.0, CO2), DELTA);
+            assertEquals(36.0, StoichiometryCalculator.calculateProportionalMassFromMass(CH4, 16.0, H2O), DELTA);
+            assertEquals(44.0, StoichiometryCalculator.calculateProportionalMassFromMass(O2, 64.0, CO2), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMolesFromMass() {
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMass(CH4, 16.0, CO2), DELTA);
-            assertEquals(2.0, calculator.calculateProportionalMolesFromMass(CH4, 16.0, H2O), DELTA);
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMass(O2, 64.0, CO2), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMass(CH4, 16.0, CO2), DELTA);
+            assertEquals(2.0, StoichiometryCalculator.calculateProportionalMolesFromMass(CH4, 16.0, H2O), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMass(O2, 64.0, CO2), DELTA);
         }
     }
 
@@ -153,14 +146,14 @@ class StoichiometryCalculatorTest {
 
         @Test
         void shouldCalculateProportionalMassFromMass() {
-            assertEquals(58.5, calculator.calculateProportionalMassFromMass(HCl, 36.5, NaCl), DELTA);
-            assertEquals(18.0, calculator.calculateProportionalMassFromMass(NaOH, 40.0, H2O), DELTA);
+            assertEquals(58.5, StoichiometryCalculator.calculateProportionalMassFromMass(HCl, 36.5, NaCl), DELTA);
+            assertEquals(18.0, StoichiometryCalculator.calculateProportionalMassFromMass(NaOH, 40.0, H2O), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMolesFromMass() {
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMass(HCl, 36.5, NaCl), DELTA);
-            assertEquals(1.0, calculator.calculateProportionalMolesFromMass(NaOH, 40.0, H2O), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMass(HCl, 36.5, NaCl), DELTA);
+            assertEquals(1.0, StoichiometryCalculator.calculateProportionalMolesFromMass(NaOH, 40.0, H2O), DELTA);
         }
     }
 
@@ -191,14 +184,14 @@ class StoichiometryCalculatorTest {
 
         @Test
         void shouldCalculateProportionalMassFromMass() {
-            assertEquals(34.0, calculator.calculateProportionalMassFromMass(N2, 28.0, NH3), DELTA);
-            assertEquals(34.0, calculator.calculateProportionalMassFromMass(H2, 6.0, NH3), DELTA);
+            assertEquals(34.0, StoichiometryCalculator.calculateProportionalMassFromMass(N2, 28.0, NH3), DELTA);
+            assertEquals(34.0, StoichiometryCalculator.calculateProportionalMassFromMass(H2, 6.0, NH3), DELTA);
         }
 
         @Test
         void shouldCalculateProportionalMolesFromMass() {
-            assertEquals(2.0, calculator.calculateProportionalMolesFromMass(N2, 28.0, NH3), DELTA);
-            assertEquals(2.0, calculator.calculateProportionalMolesFromMass(H2, 6.0, NH3), DELTA);
+            assertEquals(2.0, StoichiometryCalculator.calculateProportionalMolesFromMass(N2, 28.0, NH3), DELTA);
+            assertEquals(2.0, StoichiometryCalculator.calculateProportionalMolesFromMass(H2, 6.0, NH3), DELTA);
         }
     }
 }

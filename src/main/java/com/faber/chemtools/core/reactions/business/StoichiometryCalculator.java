@@ -6,23 +6,21 @@ import com.faber.chemtools.core.util.externaltools.MathUtil;
 
 public class StoichiometryCalculator {
 
-    public double calculateProportionalMolesFromMass(MoleculeInReaction referenceMolecule, double referenceMassInGrams, MoleculeInReaction expectedMolecule) {
+    public static double calculateProportionalMolesFromMass(MoleculeInReaction referenceMolecule, double referenceMassInGrams, MoleculeInReaction expectedMolecule) {
         double amountOfReferenceInMoles = FromMolecule.calculateAmountOfSubstance(referenceMassInGrams, referenceMolecule.getMolecule());
         return calculateProportionalMolesFromMoles(referenceMolecule, amountOfReferenceInMoles, expectedMolecule);
     }
 
-    public double calculateProportionalMolesFromMoles(MoleculeInReaction referenceMolecule, double amountOfReferenceSubstance, MoleculeInReaction expectedMolecule) {
+    public static double calculateProportionalMolesFromMoles(MoleculeInReaction referenceMolecule, double amountOfReferenceSubstance, MoleculeInReaction expectedMolecule) {
         return MathUtil.fourthProportional(referenceMolecule.getStoichiometricCoefficient(), expectedMolecule.getStoichiometricCoefficient(), amountOfReferenceSubstance);
     }
 
-    public double calculateProportionalMassFromMass(MoleculeInReaction referenceMolecule, double referenceMassInGrams, MoleculeInReaction expectedMolecule) {
+    public static double calculateProportionalMassFromMass(MoleculeInReaction referenceMolecule, double referenceMassInGrams, MoleculeInReaction expectedMolecule) {
         double amountOfReferenceInMoles = FromMolecule.calculateAmountOfSubstance(referenceMassInGrams, referenceMolecule.getMolecule());
-        double amountOfExpectedMoles = calculateProportionalMolesFromMoles(referenceMolecule, amountOfReferenceInMoles, expectedMolecule);
-
-        return FromMolecule.calculateMassInAmountOfSubstance(amountOfExpectedMoles, expectedMolecule.getMolecule());
+        return calculateProportionalMassFromMoles(referenceMolecule, amountOfReferenceInMoles, expectedMolecule);
     }
 
-    public double calculateProportionalMassFromMoles(MoleculeInReaction referenceMolecule, double amountOfReferenceSubstance, MoleculeInReaction expectedMolecule) {
+    public static double calculateProportionalMassFromMoles(MoleculeInReaction referenceMolecule, double amountOfReferenceSubstance, MoleculeInReaction expectedMolecule) {
         double amountOfExpectedMoles = calculateProportionalMolesFromMoles(referenceMolecule, amountOfReferenceSubstance, expectedMolecule);
 
         return FromMolecule.calculateMassInAmountOfSubstance(amountOfExpectedMoles, expectedMolecule.getMolecule());
