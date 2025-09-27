@@ -32,12 +32,12 @@ class BalanceEquationTest {
         reaction.addMultipleReagents(h2o); // Initially wrong side
         reaction.addMultipleProducts(o2, h2);
 
-        Reaction balanced = BalanceEquation.balance(reaction);
+        BalanceEquation.balance(reaction);
 
         // Expected: 2 H2O → 2 H2 + 1 O2
-        assertEquals(2, balanced.getReagents().getFirst().getStoichiometricCoefficient(), "H2O coefficient mismatch");
-        assertEquals(1, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "O2 coefficient mismatch");
-        assertEquals(2, balanced.getProducts().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
+        assertEquals(2, reaction.getReagents().getFirst().getStoichiometricCoefficient(), "H2O coefficient mismatch");
+        assertEquals(1, reaction.getProducts().getFirst().getStoichiometricCoefficient(), "O2 coefficient mismatch");
+        assertEquals(2, reaction.getProducts().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
         assertTrue(ValidateReaction.isBalanced(reaction));
     }
 
@@ -68,12 +68,12 @@ class BalanceEquationTest {
         reaction.addMultipleReagents(ch4, o2);
         reaction.addMultipleProducts(co2, h2o);
 
-        Reaction balanced = BalanceEquation.balance(reaction);
+        BalanceEquation.balance(reaction);
 
-        assertEquals(1, balanced.getReagents().getFirst().getStoichiometricCoefficient(), "CH4 coefficient mismatch");
-        assertEquals(2, balanced.getReagents().get(1).getStoichiometricCoefficient(), "O2 coefficient mismatch");
-        assertEquals(1, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "CO2 coefficient mismatch");
-        assertEquals(2, balanced.getProducts().get(1).getStoichiometricCoefficient(), "H2O coefficient mismatch");
+        assertEquals(1, reaction.getReagents().getFirst().getStoichiometricCoefficient(), "CH4 coefficient mismatch");
+        assertEquals(2, reaction.getReagents().get(1).getStoichiometricCoefficient(), "O2 coefficient mismatch");
+        assertEquals(1, reaction.getProducts().getFirst().getStoichiometricCoefficient(), "CO2 coefficient mismatch");
+        assertEquals(2, reaction.getProducts().get(1).getStoichiometricCoefficient(), "H2O coefficient mismatch");
         assertTrue(ValidateReaction.isBalanced(reaction));
     }
 
@@ -98,11 +98,11 @@ class BalanceEquationTest {
         reaction.addMultipleReagents(n2, h2);
         reaction.addMultipleProducts(nh3);
 
-        Reaction balanced = BalanceEquation.balance(reaction);
+        BalanceEquation.balance(reaction);
 
-        assertEquals(1, balanced.getReagents().getFirst().getStoichiometricCoefficient(), "N2 coefficient mismatch");
-        assertEquals(3, balanced.getReagents().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
-        assertEquals(2, balanced.getProducts().getFirst().getStoichiometricCoefficient(), "NH3 coefficient mismatch");
+        assertEquals(1, reaction.getReagents().getFirst().getStoichiometricCoefficient(), "N2 coefficient mismatch");
+        assertEquals(3, reaction.getReagents().get(1).getStoichiometricCoefficient(), "H2 coefficient mismatch");
+        assertEquals(2, reaction.getProducts().getFirst().getStoichiometricCoefficient(), "NH3 coefficient mismatch");
         assertTrue(ValidateReaction.isBalanced(reaction));
     }
 

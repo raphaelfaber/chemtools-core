@@ -25,15 +25,13 @@ public class BalanceEquation {
      * Balances a chemical reaction by determining the stoichiometric coefficients.
      *
      * @param reaction the chemical reaction to balance
-     * @return the balanced reaction with coefficients set
      */
-    public static Reaction balance(Reaction reaction) throws InvalidReactionException, BalanceEquationFailException {
+    public static void balance(Reaction reaction) throws InvalidReactionException, BalanceEquationFailException {
         if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)) throw new InvalidReactionException("Reagents and products do not contain the same elements") ;
         int[][] matrix = extractReactionMatrix(reaction);
         int[] coefficients = MatrixHandler.solveMatrix(matrix);
         reaction.setCoefficients(coefficients);
         if(!ValidateReaction.isBalanced(reaction)) throw new BalanceEquationFailException("Fail during balance");
-        return reaction;
     }
 
     /**
