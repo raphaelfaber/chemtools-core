@@ -1,6 +1,6 @@
 <h1>ChemTools - Java Chemistry Toolkit</h1>
 
-<p><strong>v1.0.0-SNAPSHOT</strong></p>
+<p><strong>v1.1.0</strong></p>
 
 <p>A Java project for <strong>extracting, analyzing, and balancing chemical equations</strong>, supporting:</p>
 <ul>
@@ -154,7 +154,30 @@ public class ElementsExtractionExample {
     }
 }
 </code></pre>
-  
+<h2><span class="tag">7)</span>Stoichiometry Calculations</h2>
+<p class="example-note">
+Use <code>StoichiometryCalculator</code> to calculate proportional moles and masses between reactants and products based on their stoichiometric coefficients.
+</p>
+
+<pre><code>// imports
+import com.faber.chemtools.core.reactions.business.StoichiometryCalculator;
+import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
+
+public class StoichiometryExample {
+    public static void main(String[] args) throws Exception {
+        // Assume H2 and H2O are MoleculeInReaction instances from a balanced equation
+        MoleculeInReaction H2 = ...;   // hydrogen gas
+        MoleculeInReaction H2O = ...;  // water
+
+        double waterMass = StoichiometryCalculator.calculateProportionalMassFromMass(H2, 4.0, H2O);
+
+        System.out.println("Mass of H2O produced from 4g H2: " + waterMass + " g");
+        // Example output: Mass of H2O produced from 4g H2: 36.0 g
+    }
+}
+</code></pre>
+
+
 <h2>Dependencies</h2>
 <ul>
     <li>Java 24+</li>
