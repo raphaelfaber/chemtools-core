@@ -1,15 +1,14 @@
-package com.faber.chemtools.core.reactions.business;
+package com.faber.chemtools.core.util;
 
-import com.faber.chemtools.core.elements.business.ListElementsFrom;
+import com.faber.chemtools.core.entities.Element;
+import com.faber.chemtools.core.entities.MoleculeInReaction;
+import com.faber.chemtools.core.entities.Reaction;
 import com.faber.chemtools.core.exceptions.BalanceEquationFailException;
 import com.faber.chemtools.core.exceptions.InvalidReactionException;
-import com.faber.chemtools.core.molecules.business.FromMolecule;
-import com.faber.chemtools.core.util.externaltools.MatrixHandler;
-import com.faber.chemtools.core.elements.entities.Element;
-import com.faber.chemtools.core.reactions.entities.Reaction;
-import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
 
-import java.util.*;
+import com.faber.chemtools.core.util.externaltools.MatrixHandler;
+
+import java.util.List;
 
 /**
  * Provides functionality to balance chemical reactions using
@@ -27,11 +26,10 @@ public class BalanceEquation {
      * @param reaction the chemical reaction to balance
      */
     public static void balance(Reaction reaction) throws InvalidReactionException, BalanceEquationFailException {
-        if(!ValidateReaction.hasSameElementsOnReagentsAndProducts(reaction)) throw new InvalidReactionException("Reagents and products do not contain the same elements") ;
         int[][] matrix = extractReactionMatrix(reaction);
         int[] coefficients = MatrixHandler.solveMatrix(matrix);
         reaction.setCoefficients(coefficients);
-        if(!ValidateReaction.isBalanced(reaction)) throw new BalanceEquationFailException("Fail during balance");
+        if(!reaction.isBalanced()) throw new BalanceEquationFailException("Fail during balance");
     }
 
     /**
@@ -49,17 +47,17 @@ public class BalanceEquation {
         List<MoleculeInReaction> reagents = reaction.getReagents();
         List<MoleculeInReaction> products = reaction.getProducts();
 
-        List<Element> elementsInReaction = ListElementsFrom.reaction(reaction);
+        List<Element> elementsInReaction = reaction.listElementsOnReaction();
         int[][] matrix = new int[elementsInReaction.size()][reagents.size() + products.size()];
 
         for (int i = 0; i < elementsInReaction.size(); i++) {
             Element element = elementsInReaction.get(i);
             for (int j = 0; j < reagents.size(); j++) {
-                matrix[i][j] = FromMolecule.countAtoms(reagents.get(j).getMolecule(), element);
+                matrix[i][j] = reagents.get(j).countAtoms(element);
             }
             for (int j = 0; j < products.size(); j++) {
                 matrix[i][reagents.size() + j] =
-                        Math.negateExact(FromMolecule.countAtoms(products.get(j).getMolecule(), element));
+                        Math.negateExact(products.get(j).countAtoms(element));
             }
         }
         return matrix;
