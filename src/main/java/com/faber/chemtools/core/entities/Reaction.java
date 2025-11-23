@@ -3,6 +3,7 @@ package com.faber.chemtools.core.entities;
 import com.faber.chemtools.core.exceptions.BalanceEquationFailException;
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
 import com.faber.chemtools.core.exceptions.InvalidReactionException;
+import com.faber.chemtools.core.exceptions.MoleculeNotFoundException;
 import com.faber.chemtools.core.parser.EquationParser;
 import com.faber.chemtools.core.util.BalanceEquation;
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public class Reaction {
     public List<MoleculeInReaction> getProducts(){
         return products;
     }
+    public List<MoleculeInReaction> getMolecules(){
+        return molecules;
+    }
 
     public void setCoefficients(int[] coefficients) {
         if (coefficients.length != this.reagents.size() + this.products.size()) {
@@ -67,10 +71,10 @@ public class Reaction {
         }
         for (int i = 0; i < coefficients.length; i++) {
             if(i < this.reagents.size()) {
-                reagents.get(i).adjustStoichiometricCoefficient(coefficients[i]);
+                reagents.get(i).setStoichiometricCoefficient(coefficients[i]);
                 continue;
             }
-            products.get(i-reagents.size()).adjustStoichiometricCoefficient(coefficients[i]);
+            products.get(i-reagents.size()).setStoichiometricCoefficient(coefficients[i]);
         }
 
     }
@@ -96,6 +100,14 @@ public class Reaction {
     public String toString(){
         return listToString(reagents)+" => "+listToString(products);
     }
+
+    public MoleculeInReaction findMoleculeInReaction(Molecule molecule) throws MoleculeNotFoundException {
+        return molecules.stream()
+                .filter(m -> m.equals(molecule))
+                .findFirst()
+                .orElseThrow(MoleculeNotFoundException::new);
+    }
+
 
     private String listToString(List<MoleculeInReaction> moleculesInReaction){
         return moleculesInReaction.stream().map(MoleculeInReaction::toString).collect(Collectors.joining(" + "));

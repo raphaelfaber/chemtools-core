@@ -24,4 +24,15 @@ public class Equation {
     public String toString(){
         return reaction.toString();
     }
+
+    public Reaction copyReaction()  {
+        try {
+            Reaction reaction = Reaction.factory(strEquation);
+            reaction.balance();
+            return reaction;
+        } catch (InvalidReactionException e) {} catch (BalanceEquationFailException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

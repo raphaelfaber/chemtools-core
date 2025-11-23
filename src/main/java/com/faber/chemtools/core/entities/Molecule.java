@@ -14,7 +14,7 @@ public class Molecule {
     List<AtomInMolecule> atoms = new ArrayList<AtomInMolecule>();
 
     private Molecule() {}
-    public static Molecule Factory(String formula) throws InvalidMoleculeException {
+    public static Molecule factory(String formula) throws InvalidMoleculeException {
         String MOLECULE_PATTERN = "([A-Z][a-z]?)(\\d*)";
 
         if (formula == null || formula.isEmpty()) {
@@ -41,7 +41,7 @@ public class Molecule {
         return molecule;
     }
 
-    public static Molecule Factory(List<AtomInMolecule> atoms){
+    public static Molecule factory(List<AtomInMolecule> atoms){
         List<AtomInMolecule> sortedElements = AtomInMolecule.sortElements(atoms);
         Molecule molecule = new Molecule();
         molecule.atoms = sortedElements;
@@ -70,5 +70,13 @@ public class Molecule {
                 .reduce(0.0, Double::sum);
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Molecule){
+            if(((Molecule) o).formula.equals(this.formula)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
