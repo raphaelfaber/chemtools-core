@@ -1,226 +1,141 @@
-<h1>ChemTools - Java Chemistry Toolkit</h1>
+<h1>ChemTools – Stoichiometry and Chemical Equation Engine</h1>
 
-<p><strong>v1.1.0</strong></p>
+<p><strong>ChemTools</strong> is a Java library that parses, balances, and performs stoichiometric calculations on chemical equations. It provides a fully object-oriented model where atoms, molecules, reactions, and proportional scaling are treated as first-class elements.</p>
 
-<p>A Java project for <strong>extracting, analyzing, and balancing chemical equations</strong>, supporting:</p>
+<h2>Key Features</h2>
 <ul>
-    <li>Stoichiometric coefficients</li>
-    <li>Formulas with parentheses (<code>Ca(OH)2</code>, <code>Ba3(PO4)2</code>)</li>
-    <li>Optional physical states (<code>(l)</code>, <code>(g)</code>, <code>(s)</code>, <code>(aq)</code>)</li>
-    <li>Automated testing with JUnit</li>
-</ul>
-
-<p>This project is designed for learning, automating chemistry exercises, and integrating with modern Java tools.</p>
-
-<h2>Main Features</h2>
-<ul>
-    <li><strong>Equation Extraction</strong><br>Converts a chemical equation string into manipulable objects, separating reactants, products, coefficients, and molecules.</li>
-    <li><strong>Automatic Balancing</strong><br>Adjusts coefficients to obey the law of conservation of mass.</li>
-    <li><strong>Complex Molecule Support</strong><br>Handles compounds with internal parentheses, multiple elements, and subscripts.</li>
-    <li><strong>Automated Tests</strong><br>Includes simple and complex reactions, such as redox reactions, salts, metal oxides, and aqueous compounds.</li>
-    <li><strong>Amount of substance</strong><br>Automates calculations of amount of substance and molar mass.</li>
-</ul>
-
-<h2>Usage Examples</h2>
-  <p class="small">Examples below are based on unit tests present in the project. Import paths reflect the project's package layout.</p>
-
-  <h2><span class="tag">1)</span>Expand chemical formulas</h2>
-  <p class="example-note">Use <code>FormulaExpander</code> to expand grouped or nested formulas into a flattened element string.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.util.parser.FormulaExpander;
-
-public class ExpandExample {
-    public static void main(String[] args) {
-        System.out.println(FormulaExpander.expand("Ca(OH)2"));
-        // Output: CaO2H2
-
-        System.out.println(FormulaExpander.expand("K4(ON(SO3)2)2"));
-        // Output: K4O14N2S4
-    }
-}
-</code></pre>
-
-  <h2><span class="tag">2)</span>Create molecules & build reactions</h2>
-  <p class="example-note">Create <code>Molecule</code> instances by adding elements (using <code>ElementData</code>) then compose a <code>Reaction</code>.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.elements.business.ElementData;
-import com.faber.chemtools.core.elements.entities.Element;
-import com.faber.chemtools.core.molecules.entities.Molecule;
-import com.faber.chemtools.core.reactions.entities.Reaction;
-
-public class MoleculeReactionExample {
-    public static void main(String[] args) throws Exception {
-        Element H = ElementData.getElement(1);  // Hydrogen
-        Element O = ElementData.getElement(8);  // Oxygen
-
-        Molecule H2 = new Molecule();
-        H2.addElement(H, 2);
-
-        Molecule O2 = new Molecule();
-        O2.addElement(O, 2);
-
-        Molecule H2O = new Molecule();
-        H2O.addElement(H, 2);
-        H2O.addElement(O, 1);
-
-        Reaction reaction = new Reaction();
-        reaction.addMultipleReagents(H2, O2);
-        reaction.addMultipleProducts(H2O);
-
-        System.out.println(reaction);
-        // Example output: H2 + O2 -> H2O
-    }
-}
-</code></pre>
-
-  <h2><span class="tag">3)</span>Balance reactions</h2>
-  <p class="example-note">Use <code>BalanceEquation</code> to balance a constructed reaction programmatically.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.reactions.business.BalanceEquation;
-import com.faber.chemtools.core.reactions.entities.Reaction;
-
-// assume 'reaction' created as above
-Reaction balanced = BalanceEquation.balance(reaction);
-System.out.println(balanced);
-// Example output: 2 H2 + O2 -> 2 H2O  (depending on input sides)
-</code></pre>
-
-  <h2><span class="tag">4)</span>Calculate molecular weight</h2>
-  <p class="example-note">Given a <code>Molecule</code> instance, compute its molecular mass using <code>FromMolecule.calculateMolecularWeight</code>.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.molecules.business.FromMolecule;
-import com.faber.chemtools.core.elements.business.ElementData;
-import com.faber.chemtools.core.molecules.entities.Molecule;
-
-public class MolecularWeightExample {
-    public static void main(String[] args) throws Exception {
-        Molecule glucose = new Molecule();
-        glucose.addElement(ElementData.getElement(6), 6); // C
-        glucose.addElement(ElementData.getElement(1), 12); // H
-        glucose.addElement(ElementData.getElement(8), 6); // O
-
-        double mass = FromMolecule.calculateMolecularWeight(glucose);
-        System.out.println("Glucose Molar Mass ≈ " + mass + " g/mol");
-        // Expected: ≈ 180.156 g/mol
-    }
-}
-</code></pre>
-
-  <h2><span class="tag">5)</span>Calculate amount of substance (moles)</h2>
-  <p class="example-note">Use <code>FromMolecule.calculateAmountOfSubstance</code> to convert grams to moles.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.molecules.business.FromMolecule;
-import com.faber.chemtools.core.elements.business.ElementData;
-import com.faber.chemtools.core.molecules.entities.Molecule;
-
-public class MolesExample {
-    public static void main(String[] args) throws Exception {
-        // H2O example
-        Molecule water = new Molecule();
-        water.addElement(ElementData.getElement(1), 2); // H
-        water.addElement(ElementData.getElement(8), 1); // O
-
-        double grams = 18.015;
-        double moles = FromMolecule.calculateAmountOfSubstance(grams, water);
-        System.out.println("Moles of H2O in " + grams + " g = " + moles);
-        // Expected: ≈ 1.0
-    }
-}
-</code></pre>
-
-  <h2><span class="tag">6)</span>Extract elements from molecules/reactions</h2>
-  <p class="example-note">Helpers like <code>ListElementsFrom.molecule</code> and <code>ListElementsFrom.moleculesInReaction</code> return the element list used in a molecule or reaction.</p>
-
-  <pre><code>// imports
-import com.faber.chemtools.core.elements.business.ListElementsFrom;
-import com.faber.chemtools.core.molecules.entities.Molecule;
-import com.faber.chemtools.core.elements.business.ElementData;
-
-public class ElementsExtractionExample {
-    public static void main(String[] args) throws Exception {
-        Molecule m = new Molecule();
-        m.addElement(ElementData.getElement("O"), 4);
-        m.addElement(ElementData.getElement("H"), 1);
-        m.addElement(ElementData.getElement("Cl"), 1);
-
-        var elements = ListElementsFrom.molecule(m);
-        elements.forEach(e -> System.out.println(e.getSimbol()));
-        // Expected printed elements: O, H, Cl  (order may vary)
-    }
-}
-</code></pre>
-<h2><span class="tag">7)</span>Stoichiometry Calculations</h2>
-<p class="example-note">
-Use <code>StoichiometryCalculator</code> to calculate proportional moles and masses between reactants and products based on their stoichiometric coefficients.
-</p>
-
-<pre><code>// imports
-import com.faber.chemtools.core.reactions.business.StoichiometryCalculator;
-import com.faber.chemtools.core.reactions.entities.MoleculeInReaction;
-
-public class StoichiometryExample {
-    public static void main(String[] args) throws Exception {
-        // Assume H2 and H2O are MoleculeInReaction instances from a balanced equation
-        MoleculeInReaction H2 = ...;   // hydrogen gas
-        MoleculeInReaction H2O = ...;  // water
-
-        double waterMass = StoichiometryCalculator.calculateProportionalMassFromMass(H2, 4.0, H2O);
-
-        System.out.println("Mass of H2O produced from 4g H2: " + waterMass + " g");
-        // Example output: Mass of H2O produced from 4g H2: 36.0 g
-    }
-}
-</code></pre>
-
-
-<h2>Dependencies</h2>
-<ul>
-    <li>Java 24+</li>
-    <li>Maven or Gradle for dependency management (JUnit 5 included)</li>
-</ul>
-
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;junit&lt;/groupId&gt;
-        &lt;artifactId&gt;junit&lt;/artifactId&gt;
-        &lt;version&gt;3.8.1&lt;/version&gt;
-        &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
-        &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
-        &lt;version&gt;5.10.0&lt;/version&gt;
-        &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
-        &lt;artifactId&gt;commons-math3&lt;/artifactId&gt;
-        &lt;version&gt;3.6.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-
-<h2>Contributing</h2>
-<ul>
-    <li>Open issues for bugs or suggestions</li>
-    <li>Pull requests are welcome for:
+    <li>Parse chemical equations directly from plain text.</li>
+    <li>Automatically balance reactions using algebraic matrix solving.</li>
+    <li>Object representation of atoms, molecules, reaction coefficients, and full equations.</li>
+    <li>Stoichiometric calculations:
         <ul>
-            <li>Improving the equation parser</li>
-            <li>Adding balancing for organic reactions</li>
-            <li>Performance optimization</li>
-            <li>Support for ionic equations</li>
-            <li>Implement new features</li>
+            <li>Mass calculation</li>
+            <li>Mole calculation</li>
+            <li>Proportional adjustment based on a selected reference molecule</li>
+        </ul>
+    </li>
+    <li>Optional rounding to any number of decimal places.</li>
+    <li>Well-defined exceptions for:
+        <ul>
+            <li>Invalid formulas</li>
+            <li>Unknown molecules</li>
+            <li>Malformed equations</li>
+            <li>Unbalanced reactions</li>
         </ul>
     </li>
 </ul>
 
-<h2>License</h2>
-<p>MIT License – feel free to use and modify this project.</p>
+<h2>How It Works</h2>
+<p>The library receives an equation as a string (e.g. <code>"H2 + O2 => H2O"</code>), parses it into a reaction object, builds a matrix with atomic counts, solves it mathematically, and assigns the calculated stoichiometric coefficients to each molecule.</p>
 
+<h2>Basic Example (from tests)</h2>
+
+<p>Given the reaction:</p>
+
+<pre><code>H2 + O2 => H2O</code></pre>
+
+<p>You can parse and balance it like this:</p>
+
+<pre><code>Equation eq = Equation.factory("H2 + O2 => H2O");
+eq.balance();
+</code></pre>
+
+<p>After balancing, the equation becomes:</p>
+
+<pre><code>2H2 + O2 => 2H2O</code></pre>
+
+<h2>Stoichiometric Calculation</h2>
+
+<p>The calculator allows specifying a reference molecule and how many moles of it are used. It will then compute all derived values for the entire reaction.</p>
+
+<pre><code>StoichiometricCalculator calc = new StoichiometricCalculator(eq);
+calc.setReferenceMolecule("H2");
+calc.setRefenceMoles(4, 1);
+</code></pre>
+
+<p>Now the reaction becomes:</p>
+
+<pre><code>4H2 + 2O2 => 4H2O</code></pre>
+
+<h3>Mass Calculation</h3>
+
+<p>This is tested in the unit tests:</p>
+
+<pre><code>assertEquals(8,  calc.calculateMass("H2"),  DELTA);
+assertEquals(64, calc.calculateMass("O2"),  DELTA);
+assertEquals(72, calc.calculateMass("H2O"), DELTA);
+</code></pre>
+
+<p>Meaning:</p>
+<ul>
+    <li>4 moles of H₂ = 8 g</li>
+    <li>2 moles of O₂ = 64 g</li>
+    <li>4 moles of H₂O = 72 g</li>
+</ul>
+
+<h3>Mole Calculation</h3>
+
+<pre><code>assertEquals(4, calc.calculateMoles("H2"),  DELTA);
+assertEquals(2, calc.calculateMoles("O2"),  DELTA);
+assertEquals(4, calc.calculateMoles("H2O"), DELTA);
+</code></pre>
+
+<p>The return value is simply the stoichiometric coefficient after scaling.</p>
+
+<h3>Rounding</h3>
+
+<p>Results can be rounded:</p>
+
+<pre><code>calc.calculateMass("H2", 2)  // -> 8.00
+calc.calculateMoles("H2", 3) // -> 4.000
+</code></pre>
+
+<h2>Error Handling Examples</h2>
+
+<p>If a molecule does not exist in the reaction:</p>
+
+<pre><code>assertThrows(
+    MoleculeNotFoundException.class,
+    () -> calc.calculateMass("Xx")
+);
+</code></pre>
+
+<p>If a formula is syntactically invalid:</p>
+
+<pre><code>assertThrows(
+    InvalidMoleculeException.class,
+    () -> calc.calculateMoles("123")
+);
+</code></pre>
+
+<h2>Folder Structure</h2>
+
+<p>Main components are located under:</p>
+
+<ul>
+    <li><strong>entities</strong> – Atom, Molecule, MoleculeInReaction, Equation</li>
+    <li><strong>parser</strong> – Responsible for interpreting reaction text</li>
+    <li><strong>business</strong> – Includes StoichiometricCalculator</li>
+    <li><strong>externaltools</strong> – Matrix calculation system</li>
+    <li><strong>comparators</strong> – Utility comparators</li>
+</ul>
+
+<h2>Automated Tests</h2>
+
+<p>A complete JUnit 5 suite can be found in <code>src/test/java</code>. It includes:</p>
+
+<ul>
+    <li>Equation parsing and balance validation</li>
+    <li>Mass and mole calculations</li>
+    <li>Rounding rules</li>
+    <li>Input validation and error handling</li>
+</ul>
+
+<h2>Requirements</h2>
+<ul>
+    <li>Java 17+</li>
+    <li>JUnit 5 (for tests)</li>
+</ul>
+
+<h2>License</h2>
+<p>Distributed freely with no warranty of any kind.</p>
