@@ -133,7 +133,7 @@ calc.calculateMoles("H2", 3) // -> 4.000
 
 <h2>Requirements</h2>
 <ul>
-    <li>Java 17+</li>
+    <li>Java 24+</li>
     <li>JUnit 5 (for tests)</li>
 </ul>
 
