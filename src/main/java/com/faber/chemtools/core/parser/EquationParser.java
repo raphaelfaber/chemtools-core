@@ -54,4 +54,52 @@ public class EquationParser {
         throw new InvalidReactionException();
     }
 
+    public static String toSubscriptNumber(String value) {
+        if (value == null) return null;
+
+        StringBuilder result = new StringBuilder();
+
+        for (char c : value.toCharArray()) {
+            switch (c) {
+                case '0': result.append('₀'); break;
+                case '1': result.append('₁'); break;
+                case '2': result.append('₂'); break;
+                case '3': result.append('₃'); break;
+                case '4': result.append('₄'); break;
+                case '5': result.append('₅'); break;
+                case '₆': result.append('₆'); break;
+                case '7': result.append('₇'); break;
+                case '8': result.append('₈'); break;
+                case '9': result.append('₉'); break;
+                default:  result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+    public static String fromSubscriptNumber(String value) {
+        if (value == null) return null;
+
+        StringBuilder result = new StringBuilder();
+
+        for (char c : value.toCharArray()) {
+            switch (c) {
+                case '₀': result.append('0'); break;
+                case '₁': result.append('1'); break;
+                case '₂': result.append('2'); break;
+                case '₃': result.append('3'); break;
+                case '₄': result.append('4'); break;
+                case '₅': result.append('5'); break;
+                case '₆': result.append('6'); break;
+                case '₇': result.append('7'); break;
+                case '₈': result.append('8'); break;
+                case '₉': result.append('9'); break;
+                default:  result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
+
 }

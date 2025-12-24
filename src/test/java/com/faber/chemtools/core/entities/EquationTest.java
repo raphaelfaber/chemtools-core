@@ -39,7 +39,7 @@ class EquationTest {
 
         eq.balance();
 
-        assertEquals("2H2 + O2 => 2H2O", eq.toString());
+        assertEquals("2H₂ + O₂ => 2H₂O", eq.toString());
     }
 
     @Test
@@ -48,6 +48,25 @@ class EquationTest {
 
         eq.balance();
 
-        assertEquals("C + O2 => CO2", eq.toString());
+        assertEquals("C + O₂ => CO₂", eq.toString());
     }
+
+    @Test
+    public void testSubscriptNumberSupportCO2Formation() throws Exception {
+        Equation eq = Equation.factory("C + O₂ => CO₂");
+
+        eq.balance();
+
+        assertEquals("C + O₂ => CO₂", eq.toString());
+    }
+
+    @Test
+    public void testSubscriptNumberSupportWaterFormation() throws InvalidReactionException, BalanceEquationFailException {
+        Equation eq = Equation.factory("H₂ + O₂ => H₂O");
+
+        eq.balance();
+
+        assertEquals("2H₂ + O₂ => 2H₂O", eq.toString());
+    }
+
 }

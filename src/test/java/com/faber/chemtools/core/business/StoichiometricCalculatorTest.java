@@ -29,7 +29,7 @@ class StoichiometricCalculatorTest {
         // coef O2: 1 * 2 = 2
         // coef H2O: 2 * 2 = 4
 
-        assertEquals("4H2 + 2O2 => 4H2O", calc.toString());
+        assertEquals("4H₂ + 2O₂ => 4H₂O", calc.toString());
     }
 
     @Test
@@ -46,7 +46,7 @@ class StoichiometricCalculatorTest {
 
         // Dobro da equação:
 
-        assertEquals("4H2 + 2O2 => 4H2O", calc.toString());
+        assertEquals("4H₂ + 2O₂ => 4H₂O", calc.toString());
     }
 
     @Test
@@ -72,12 +72,12 @@ class StoichiometricCalculatorTest {
     void waterEquationTest() throws Exception {
         Equation eq = Equation.factory("H2 + O2 => H2O");
         eq.balance();
-        assertEquals("2H2 + O2 => 2H2O",eq.toString());
+        assertEquals("2H₂ + O₂ => 2H₂O",eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("H2");
         calc.setRefenceMoles(4,1);
-        assertEquals("4H2 + 2O2 => 4H2O", calc.toString());
+        assertEquals("4H₂ + 2O₂ => 4H₂O", calc.toString());
 
         int expectedH2Mass = 8;
         int expectedO2Mass = 64;
@@ -100,12 +100,12 @@ class StoichiometricCalculatorTest {
     void methaneCombustionTest() throws Exception {
         Equation eq = Equation.factory("CH4 + O2 => CO2 + H2O");
         eq.balance();
-        assertEquals("CH4 + 2O2 => CO2 + 2H2O", eq.toString());
+        assertEquals("CH₄ + 2O₂ => CO₂ + 2H₂O", eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("CH4");
         calc.setRefenceMoles(1, 1);
-        assertEquals("CH4 + 2O2 => CO2 + 2H2O", calc.toString());
+        assertEquals("CH₄ + 2O₂ => CO₂ + 2H₂O", calc.toString());
 
         assertEquals(16, calc.calculateMass("CH4"), DELTA);
         assertEquals(64, calc.calculateMass("O2"), DELTA);
@@ -122,12 +122,12 @@ class StoichiometricCalculatorTest {
     void ironOxidationTest() throws Exception {
         Equation eq = Equation.factory("Fe + O2 => Fe2O3");
         eq.balance();
-        assertEquals("4Fe + 3O2 => 2Fe2O3", eq.toString());
+        assertEquals("4Fe + 3O₂ => 2Fe₂O₃", eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("Fe");
         calc.setRefenceMoles(4, 1);
-        assertEquals("4Fe + 3O2 => 2Fe2O3", calc.toString());
+        assertEquals("4Fe + 3O₂ => 2Fe₂O₃", calc.toString());
 
         assertEquals(223.38, calc.calculateMass("Fe"), DELTA);
         assertEquals(96, calc.calculateMass("O2"), DELTA);
@@ -142,12 +142,12 @@ class StoichiometricCalculatorTest {
     void neutralizationTest() throws Exception {
         Equation eq = Equation.factory("HCl + NaOH => NaCl + H2O");
         eq.balance();
-        assertEquals("HCl + NaOH => NaCl + H2O", eq.toString());
+        assertEquals("HCl + NaOH => NaCl + H₂O", eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("HCl");
         calc.setRefenceMoles(2, 1);
-        assertEquals("2HCl + 2NaOH => 2NaCl + 2H2O", calc.toString());
+        assertEquals("2HCl + 2NaOH => 2NaCl + 2H₂O", calc.toString());
 
         assertEquals(73, calc.calculateMass("HCl"), DELTA);
         assertEquals(80, calc.calculateMass("NaOH"), DELTA);
@@ -164,12 +164,12 @@ class StoichiometricCalculatorTest {
     void calciumCarbonateDecompositionTest() throws Exception {
         Equation eq = Equation.factory("CaCO3 => CaO + CO2");
         eq.balance();
-        assertEquals("CaCO3 => CaO + CO2", eq.toString());
+        assertEquals("CaCO₃ => CaO + CO₂", eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("CaCO3");
         calc.setRefenceMoles(1, 1);
-        assertEquals("CaCO3 => CaO + CO2", calc.toString());
+        assertEquals("CaCO₃ => CaO + CO₂", calc.toString());
 
         assertEquals(100, calc.calculateMass("CaCO3"), DELTA);
         assertEquals(56, calc.calculateMass("CaO"), DELTA);
@@ -184,12 +184,12 @@ class StoichiometricCalculatorTest {
     void ammoniaSynthesisTest() throws Exception {
         Equation eq = Equation.factory("N2 + H2 => NH3");
         eq.balance();
-        assertEquals("N2 + 3H2 => 2NH3", eq.toString());
+        assertEquals("N₂ + 3H₂ => 2NH₃", eq.toString());
 
         StoichiometricCalculator calc = new StoichiometricCalculator(eq);
         calc.setReferenceMolecule("N2");
         calc.setRefenceMoles(2, 1);
-        assertEquals("2N2 + 6H2 => 4NH3", calc.toString());
+        assertEquals("2N₂ + 6H₂ => 4NH₃", calc.toString());
 
         assertEquals(56, calc.calculateMass("N2"), DELTA);
         assertEquals(12, calc.calculateMass("H2"), DELTA);

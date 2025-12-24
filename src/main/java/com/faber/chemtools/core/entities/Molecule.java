@@ -1,6 +1,7 @@
 package com.faber.chemtools.core.entities;
 
 import com.faber.chemtools.core.exceptions.InvalidMoleculeException;
+import com.faber.chemtools.core.parser.EquationParser;
 import com.faber.chemtools.core.util.FormulaExpander;
 
 import java.util.ArrayList;
@@ -20,14 +21,14 @@ public class Molecule {
         if (formula == null || formula.isEmpty()) {
             throw new InvalidMoleculeException("The formula is empty or null");
         }
-
+        formula = EquationParser.fromSubscriptNumber(formula);
         String expandedFormula = FormulaExpander.expand(formula);
 
         Pattern pattern = Pattern.compile(MOLECULE_PATTERN);
         Matcher matcher = pattern.matcher(expandedFormula);
 
         Molecule molecule = new Molecule();
-        molecule.formula = formula;
+        molecule.formula = EquationParser.toSubscriptNumber(formula);
 
         while (matcher.find()) {
             Atom atom = Atom.factory(matcher.group(1));

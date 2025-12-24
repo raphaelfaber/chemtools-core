@@ -14,7 +14,7 @@ class MoleculeTest {
     void testSimpleFormula() throws InvalidMoleculeException {
         Molecule m = Molecule.factory("H2O");
 
-        assertEquals("H2O", m.toString());
+        assertEquals("H₂O", m.toString());
         assertEquals(2, m.atoms.size());
 
         assertEquals("H", m.atoms.get(0).atom.getElement().getSymbol());
