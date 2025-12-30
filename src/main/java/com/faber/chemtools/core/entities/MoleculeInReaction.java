@@ -62,4 +62,8 @@ public class MoleculeInReaction {
     public double calculateAmountOfMolesInMass(double mass){
         return new BigDecimal(mass).divide(new BigDecimal(molecule.calculateMolarWeight()),10, RoundingMode.HALF_UP).doubleValue();
     }
+
+    public String getFormula(){
+        return molecule.toString();
+    }
 }
